@@ -1,1 +1,22 @@
 # A GitHub Action to get the latest commit that passed all checks.
+
+name: get-green-head
+on: 
+  push:
+    branches: 
+      # - main
+      - get-green-head    # testing
+
+# From https://github.com/talentpair/last-green-commit-action
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: talentpair/last-green-commit-action@master
+        id: last-green-commit
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      # In our case, this is a node script that reads the ENV variable and does the git diffing analysis
+      - run: yarn test:ci
+        env:
+          LAST_GREEN_COMMIT: ${{ steps.last-green-commit.outputs.result }}

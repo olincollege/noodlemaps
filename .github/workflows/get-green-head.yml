@@ -8,16 +8,32 @@ on:
       - get-green-head    # testing
 
 # From https://github.com/talentpair/last-green-commit-action
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: talentpair/last-green-commit-action@master
+#         id: last-green-commit
+#         with:
+#           github-token: ${{ secrets.GITHUB_TOKEN }}
+#       - run: npm install --global yarn
+#       # In our case, this is a node script that reads the ENV variable and does the git diffing analysis
+#       - run: yarn test:ci
+#         env:
+#           LAST_GREEN_COMMIT: ${{ steps.last-green-commit.outputs.result }}
+
+# From https://github.com/nrwl/last-successful-commit-action
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
+    name: Deploying affected apps
     steps:
-      - uses: talentpair/last-green-commit-action@master
-        id: last-green-commit
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.4.5
+      - uses: nrwl/last-successful-commit-action@v1
+        id: last_successful_commit
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm install --global yarn
-      # In our case, this is a node script that reads the ENV variable and does the git diffing analysis
-      - run: yarn test:ci
-        env:
-          LAST_GREEN_COMMIT: ${{ steps.last-green-commit.outputs.result }}
+          branch: 'master'
+          workflow_id: 'deploy.yml'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: npm run nx affected -- --target=build --base=${{ steps.last_successful_commit.outputs.commit_hash }} --parallel --configuration=production

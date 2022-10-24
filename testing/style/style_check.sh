@@ -6,7 +6,7 @@ if [ -n "$VIRTUAL_ENV" ]; then
     PATH="$VIRTUAL_ENV"/bin:"$PATH"
 fi
 
-FILES=$(python << EOF
+FILES=$(python3 << EOF
 import subprocess
 import re
 import sys

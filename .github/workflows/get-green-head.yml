@@ -1,6 +1,6 @@
 # A GitHub Action to get the latest commit that passed all checks.
 
-name: get-green-head
+name: Get latest green commit
 on: 
   push:
     branches: 
@@ -11,6 +11,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./noodlemaps/noodlemaps
     steps:
       - uses: talentpair/last-green-commit-action@master
         id: last-green-commit

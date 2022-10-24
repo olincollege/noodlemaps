@@ -21,9 +21,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: npm install --global yarn
       # In our case, this is a node script that reads the ENV variable and does the git diffing analysis
-      - run: |
-          cd ..
-          yarn test:ci
+      - run: yarn test:ci
         env:
           LAST_GREEN_COMMIT: ${{ steps.last-green-commit.outputs.result }}
 

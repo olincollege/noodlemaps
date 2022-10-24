@@ -1,0 +1,19 @@
+{
+  "name": "noodlemaps",
+  "version": "1.0.0",
+  "description": "Better multi-stop path planning built on google maps",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olincollege/noodlemaps.git"
+  },
+  "author": "Berwin Lan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olincollege/noodlemaps/issues"
+  },
+  "homepage": "https://github.com/olincollege/noodlemaps#readme"
+}

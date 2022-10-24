@@ -11,9 +11,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./noodlemaps/noodlemaps
+    # defaults:
+    #   run:
+    #     working-directory: ./noodlemaps/noodlemaps
     steps:
       - uses: talentpair/last-green-commit-action@master
         id: last-green-commit
@@ -21,7 +21,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - run: npm install --global yarn
       # In our case, this is a node script that reads the ENV variable and does the git diffing analysis
-      - run: yarn test:ci
+      - run: |
+          cd ..
+          yarn test:ci
         env:
           LAST_GREEN_COMMIT: ${{ steps.last-green-commit.outputs.result }}
 

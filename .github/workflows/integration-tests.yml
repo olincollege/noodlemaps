@@ -2,10 +2,10 @@ name: Integration Tests
 on:
   pull_request:
     types: [opened, reopened]
+    branches: true-head
 jobs:
   integration-tests:
     name: Run Integration Tests
-    if: startsWith(github.event.payload.pull_request.head, 'integration-test-action')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the Repo
@@ -17,4 +17,4 @@ jobs:
       - name: Run Tests
         id: run_tests
         working-directory: ./testing/integration_tests
-        run: pytest .
+        run: pytest *.py

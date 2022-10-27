@@ -1,5 +1,5 @@
 import pytest
 
 
-def example_passing_test():
+def test_pass():
     assert True

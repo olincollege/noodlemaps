@@ -2,7 +2,9 @@ name: Integration Tests
 on:
   pull_request:
     types: [opened, reopened]
-    branches: true-head
+    branches:
+      - true-head
+      - integration-test-action
 jobs:
   integration-tests:
     name: Run Integration Tests

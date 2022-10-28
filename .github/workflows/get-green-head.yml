@@ -1,17 +1,17 @@
 # A GitHub Action to get the latest commit that passed all checks.
 
 name: Get latest green commit
-on: 
-  push:   # a merged PR always results in a push
-    branches: 
+on:
+  push: # a merged PR always results in a push
+    branches:
       # - true-head
-      - get-green-head    # testing
+      - get-green-head # testing
 jobs:
   green-head-test:
     name: Check for green head
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repo
+      - name: Repo checkout
         uses: actions/checkout@v3
 
       - name: Install Python and Pytest
@@ -21,11 +21,11 @@ jobs:
         # run: sudo apt install python3 && pip install markupsafe==2.0.1
         run: sudo apt install python3 && pip install pytest
 
-      - name: Checkout true-head branch
-        run: git checkout true-head
+      - name: true-head branch checkout
+        run: git fetch --all && git checkout true-head
 
       - name: Run end-to-end test on true head
-        run: pytest   # returns 0 exit code if all tests pass
+        run: pytest test_end_to_end.py # returns 0 exit code if all tests pass
 
       - name: Merge into main if tests pass
-        run: if [[ $? -eq 0 ]]; then git checkout main && git merge main-head; fi
+        run: if [[ $? -eq 0 ]]; then git checkout main && git merge main; fi

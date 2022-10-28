@@ -25,7 +25,7 @@ jobs:
         run: git fetch --all && git checkout true-head
 
       - name: Run end-to-end test on true head
-        run: pytest test_end_to_end.py # returns 0 exit code if all tests pass
+        run: pytest ./test_end_to_end.py # returns 0 exit code if all tests pass
 
       - name: Merge into main if tests pass
         run: if [[ $? -eq 0 ]]; then git checkout main && git merge main; fi

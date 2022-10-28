@@ -2,38 +2,30 @@
 
 name: Get latest green commit
 on: 
-  push:
+  push:   # a merged PR always results in a push
     branches: 
-      # - main
+      # - true-head
       - get-green-head    # testing
-
-# From https://github.com/talentpair/last-green-commit-action
 jobs:
-  test:
+  green-head-test:
+    name: Check for green head
     runs-on: ubuntu-latest
     steps:
-      - uses: talentpair/last-green-commit-action@master
-        id: last-green-commit
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm install --global yarn
-      # In our case, this is a node script that reads the ENV variable and does the git diffing analysis
-      - run: yarn test:ci
-        env:
-          LAST_GREEN_COMMIT: ${{ steps.last-green-commit.outputs.result }}
+      - name: Check out repo
+        uses: actions/checkout@v3
 
-# From https://github.com/nrwl/last-successful-commit-action
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     name: Deploying affected apps
-#     steps:
-#       - uses: actions/checkout@v1
-#       - uses: bahmutov/npm-install@v1.4.5
-#       - uses: nrwl/last-successful-commit-action@v1
-#         id: last_successful_commit
-#         with:
-#           branch: 'get-green-head'
-#           workflow_id: 'deploy.yml'
-#           github_token: ${{ secrets.GITHUB_TOKEN }}
-#       - run: npm run nx affected -- --target=build --base=${{ steps.last_successful_commit.outputs.commit_hash }} --parallel --configuration=production
+      - name: Install Python and Pytest
+        # uses: aws-actions/setup-sam@v1
+        #   with:
+        #     version: 1.37.0
+        # run: sudo apt install python3 && pip install markupsafe==2.0.1
+        run: sudo apt install python3 && pip install pytest
+
+      - name: Checkout true-head branch
+        run: git checkout true-head
+
+      - name: Run end-to-end test on true head
+        run: pytest   # returns 0 exit code if all tests pass
+
+      - name: Merge into main if tests pass
+        run: if [[ $? -eq 0 ]]; then git checkout main && git merge main-head; fi

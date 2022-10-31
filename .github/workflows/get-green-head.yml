@@ -25,4 +25,4 @@ jobs:
         run: pytest # returns 0 exit code if all tests pass
 
       - name: Merge into main if tests pass   # true head is main
-        run: if [[ $? -eq 0 ]]; then git checkout main && git merge true-head; fi
+        run: if [[ $? -eq 0 ]]; then git checkout main && git pull && git merge true-head; fi

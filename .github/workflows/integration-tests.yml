@@ -1,0 +1,22 @@
+name: Integration Tests
+on:
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - true-head
+      - integration-test-action
+jobs:
+  integration-tests:
+    name: Run Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the Repo
+        uses: actions/checkout@v3
+      - name: Install pytest
+        run: sudo apt install python3-pip && pip install pytest
+      - name: Switch Branch
+        run: git checkout ${{ github.event.payload.pull_request.base }}
+      - name: Run Tests
+        id: run_tests
+        working-directory: ./testing/integration_tests
+        run: pytest *.py

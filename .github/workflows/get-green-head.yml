@@ -4,8 +4,7 @@ name: Get latest green commit
 on:
   push: # a merged PR always results in a push
     branches:
-      # - true-head
-      - get-green-head # testing
+      - true-head
 jobs:
   green-head-test:
     name: Check for green head

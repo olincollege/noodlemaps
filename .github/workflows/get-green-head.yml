@@ -23,5 +23,5 @@ jobs:
         working-directory: ./testing/end_to_end_tests
         run: pytest # returns 0 exit code if all tests pass
 
-      - name: Merge into main if tests pass   # true head is main
-        run: if [[ $? -eq 0 ]]; then git checkout main && git pull && git merge true-head && git push; fi
+      - name: Merge into main if tests pass
+        run: if [[ $? -eq 0 ]]; then git checkout green-head && git pull && git merge true-head && git push; fi

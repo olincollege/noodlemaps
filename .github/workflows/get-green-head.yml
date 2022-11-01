@@ -17,7 +17,7 @@ jobs:
         run: sudo apt install python3 && pip install pytest
 
       - name: true-head branch checkout
-        run: git fetch --all && git checkout true-head
+        run: git fetch --all --unshallow && git checkout true-head
 
       - name: Run end-to-end test on true head
         working-directory: ./testing/end_to_end_tests

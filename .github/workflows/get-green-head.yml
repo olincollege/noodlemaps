@@ -1,6 +1,7 @@
 # A GitHub Action to get the latest commit that passed all checks.
+# Fails when you need to manually merge, not sure if it's automatable
 
-name: Get latest green commit
+name: Merge latest green commit from true head into green head
 on:
   push: # a merged PR always results in a push
     branches:

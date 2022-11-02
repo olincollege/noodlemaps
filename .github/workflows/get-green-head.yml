@@ -23,5 +23,8 @@ jobs:
         working-directory: ./testing/end_to_end_tests
         run: pytest # returns 0 exit code if all tests pass
 
+      - name: Set identity to Berwin
+        run: git config --global user.email "blan@olin.edu" && git config --global user.name "Berwin Lan"
+
       - name: Merge into main if tests pass
-        run: if [[ $? -eq 0 ]]; then git checkout green-head && git pull && git merge true-head && git push; fi
+        run: if [[ $? -eq 0 ]]; then git checkout test-green-head && git pull && git merge true-head && git push; fi

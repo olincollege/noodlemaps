@@ -1,0 +1,31 @@
+# A GitHub Action to get the latest commit that passed all checks.
+# Fails when you need to manually merge, not sure if it's automatable
+
+name: Merge latest green commit from true head into green head
+on:
+  push: # a merged PR always results in a push
+    branches:
+      - true-head
+jobs:
+  green-head-test:
+    name: Check for green head
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repo checkout
+        uses: actions/checkout@v3
+
+      - name: Install Python and Pytest
+        run: sudo apt install python3 && pip install pytest
+
+      - name: true-head branch checkout
+        run: git fetch --all --unshallow && git checkout true-head
+
+      - name: Run end-to-end test on true head
+        working-directory: ./testing/end_to_end_tests
+        run: pytest # returns 0 exit code if all tests pass
+
+      - name: Set identity to Berwin
+        run: git config --global user.email "blan@olin.edu" && git config --global user.name "Berwin Lan"
+
+      - name: Merge into main if tests pass
+        run: if [[ $? -eq 0 ]]; then git checkout green-head && git pull && git merge true-head && git push; fi

@@ -17,4 +17,4 @@ jobs:
         run: git checkout ${{ github.event.payload.pull_request.base }}
       - name: Run Tests
         id: run_tests
-        run: ls && pytest ./testing/integration_tests/*.py
+        run: ls && PYTHONPATH=. pytest ./testing/integration_tests/*.py

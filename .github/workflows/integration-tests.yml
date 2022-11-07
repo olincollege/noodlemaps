@@ -1,10 +1,9 @@
 name: Integration Tests
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, reopened, edited]
     branches:
       - true-head
-      - integration-test-action
 jobs:
   integration-tests:
     name: Run Integration Tests
@@ -18,5 +17,4 @@ jobs:
         run: git checkout ${{ github.event.payload.pull_request.base }}
       - name: Run Tests
         id: run_tests
-        working-directory: ./testing/integration_tests
-        run: pytest *.py
+        run: ls && PYTHONPATH=. pytest ./testing/integration_tests/*.py

@@ -1,2 +1,6 @@
 networkx[default]
 python-dotenv
+os
+pytest
+json
+requests

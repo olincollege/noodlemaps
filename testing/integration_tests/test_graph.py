@@ -16,13 +16,6 @@ midpoints = ['Charleston%2CMA', 'Concord%2CMA', 'Sudbury%2CMA', 'Westwood%2CMA',
 origins = [start] + midpoints
 dests = [end] + midpoints
 
-def test_graph():
-    # Create test graph
-    graph = Graph(start=start, end=end)
-
-    # Compare
-    assert graph._se_node == se_node
-
 def test_add_nodes():
     # Create test graph
     graph = Graph(start=start, end=end)

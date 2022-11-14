@@ -60,7 +60,7 @@ class Graph:
 
     def draw(self):
         """
-        Draws graph using
+        Draws graph using matplotlib.
         """
         nx.draw_circular(self.graph,
                          node_color='C0',

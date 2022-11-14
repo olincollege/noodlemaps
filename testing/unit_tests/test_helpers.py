@@ -13,5 +13,5 @@ def test_call_api():
     with open('testing/integration_tests/test_response.json') as f:
         sample_data = json.load(f)
 
-    # Traffic data will vary
-    assert (data['destination_addresses'] == sample_data['destination_addresses']) & (data['origin_addresses'] == sample_data['origin_addresses']) 
+    # Traffic data will vary, but check that data was returned 
+    assert (data['rows'] != []) & (data['destination_addresses'] == sample_data['destination_addresses']) & (data['origin_addresses'] == sample_data['origin_addresses']) 

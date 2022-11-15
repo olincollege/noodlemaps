@@ -23,13 +23,15 @@ def call_api(start, end, midpoints):
     # Join midpoints into string
     midpoint_str = '%7C'.join(midpoints)
 
+    origins = f'origins={start}%7C{midpoint_str}'
+    dests = f'destinations={end}%7C{midpoint_str}'
+    departure_time = 'departure_time=now'
+    key = f'key={API_KEY}'
+
     # Create URL
-    url = f"https://maps.googleapis.com/maps/api/distancematrix/json?origins={start}%7C{midpoint_str}&destinations={end}%7C{midpoint_str}&departure_time=now&key={API_KEY}"
+    url = f"https://maps.googleapis.com/maps/api/distancematrix/json?{'&'.join([origins, dests, departure_time, key])}"
 
     # Make HTTP request
     response = requests.request("GET", url, headers={}, data={})
-
-    print(response.text)
-    print(API_KEY)
 
     return response.json()

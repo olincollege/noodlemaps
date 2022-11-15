@@ -1,0 +1,75 @@
+{
+   "destination_addresses" : [ "Lexington, MA, USA", "Needham, MA, USA" ],
+   "origin_addresses" : [ "Boston, MA, USA", "Needham, MA, USA" ],
+   "rows" : [
+      {
+         "elements" : [
+            {
+               "distance" : {
+                  "text" : "33.2 km",
+                  "value" : 33244
+               },
+               "duration" : {
+                  "text" : "27 mins",
+                  "value" : 1644
+               },
+               "duration_in_traffic" : {
+                  "text" : "26 mins",
+                  "value" : 1543
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "29.9 km",
+                  "value" : 29916
+               },
+               "duration" : {
+                  "text" : "30 mins",
+                  "value" : 1782
+               },
+               "duration_in_traffic" : {
+                  "text" : "28 mins",
+                  "value" : 1691
+               },
+               "status" : "OK"
+            }
+         ]
+      },
+      {
+         "elements" : [
+            {
+               "distance" : {
+                  "text" : "24.0 km",
+                  "value" : 24013
+               },
+               "duration" : {
+                  "text" : "24 mins",
+                  "value" : 1438
+               },
+               "duration_in_traffic" : {
+                  "text" : "23 mins",
+                  "value" : 1395
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "1 m",
+                  "value" : 0
+               },
+               "duration" : {
+                  "text" : "1 min",
+                  "value" : 0
+               },
+               "duration_in_traffic" : {
+                  "text" : "1 min",
+                  "value" : 0
+               },
+               "status" : "OK"
+            }
+         ]
+      }
+   ],
+   "status" : "OK"
+}

@@ -30,12 +30,17 @@ def hello():
 def say_hi_to_visitor(visitor_name):
     return f"Hello {visitor_name}!"
 
+# http://127.0.0.1:5000/query-example?origins=Boston%2CMA%7CNeedham%2CMA&destinations=Lexington%2CMA%7CNeedham%2CMA&departure_time=now&key=this_is_the_api_key
 @app.route('/query-example')
 def query_example():
     # Get origins
     origins = request.args.get('origins')
+    dests = request.args.get('destinations')
+    key = request.args.get('key')
 
-    return '''<h1>The origins value is: {}</h1>'''.format(origins)
+    return f'''<h1>The origins value is: {origins}</h1>\n
+              <h2>The destinations value is: {dests}</h2>\n
+              <p>The key is: {key}</p>'''
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')   # run Flask app

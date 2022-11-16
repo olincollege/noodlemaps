@@ -30,10 +30,10 @@ def hello():
 def say_hi_to_visitor(visitor_name):
     return f"Hello {visitor_name}!"
 
-# http://127.0.0.1:5000/query-example?origins=Boston%2CMA%7CNeedham%2CMA&destinations=Lexington%2CMA%7CNeedham%2CMA&departure_time=now&key=this_is_the_api_key
-@app.route('/query-example')
+# http://127.0.0.1:5000/query?origins=Boston%2CMA%7CNeedham%2CMA&destinations=Lexington%2CMA%7CNeedham%2CMA&departure_time=now&key=this_is_the_api_key
+@app.route('/query')
 def query_example():
-    # Get origins
+    # Get keys, or return None if they don't exist
     origins = request.args.get('origins')
     dests = request.args.get('destinations')
     key = request.args.get('key')
@@ -41,6 +41,30 @@ def query_example():
     return f'''<h1>The origins value is: {origins}</h1>\n
               <h2>The destinations value is: {dests}</h2>\n
               <p>The key is: {key}</p>'''
+
+@app.route('/form', methods=['GET', 'POST'])
+def form():
+    # Handle the POST request
+    if request.method == 'POST':
+        # Get keys, or return None if they don't exist
+        origins = request.form.get('origins')
+        dests = request.form.get('destinations')
+        key = request.form.get('key')
+
+        return f'''<h1>The origins value is: {origins}</h1>\n
+                <h2>The destinations value is: {dests}</h2>\n
+                <p>The key is: {key}</p>'''
+
+    # Handle the GET request otherwise
+    return '''
+        <form method="POST">
+            <p>Enter all values as comma-separated values <3 (ex. "Needham MA, Somerville MA, Seattle WA")</p>
+            <div><label>Origins: <input type="text" name="origins"></label></div>
+            <div><label>Destinations: <input type="text" name="dests"></label></div>
+            <div><label>API Key: <input type="text" name="key"></label></div>
+            <input type="submit" value="Submit">
+        </form>
+        '''
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')   # run Flask app

@@ -1,7 +1,9 @@
-import time
+# python3 -m flask run in current folder
+import time, redis
+from flask import Flask, request
 
-import redis
-from flask import Flask
+# Resource for building REST API:
+#   https://www.digitalocean.com/community/tutorials/processing-incoming-request-data-in-flask
 
 app = Flask(__name__)
 cache = redis.Redis(host='redis', port=6379)
@@ -27,3 +29,13 @@ def hello():
 @app.route('/name/<visitor_name>')
 def say_hi_to_visitor(visitor_name):
     return f"Hello {visitor_name}!"
+
+@app.route('/query-example')
+def query_example():
+    # Get origins
+    origins = request.args.get('origins')
+
+    return '''<h1>The origins value is: {}</h1>'''.format(origins)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')   # run Flask app

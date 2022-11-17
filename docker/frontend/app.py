@@ -1,6 +1,11 @@
 # python3 -m flask run in current folder
-import time, redis
+import time, redis#, sys
 from flask import Flask, request
+from src.utils.url_builder import UrlBuilder
+
+# SRC NEEDS TO BE IN SAME DIRECTORY AS THIS
+# sys.path.append('../../src')
+# from src.utils.url_builder import UrlBuilder
 
 # Resource for building REST API:
 #   https://www.digitalocean.com/community/tutorials/processing-incoming-request-data-in-flask
@@ -49,20 +54,37 @@ def form():
     # Handle the POST request
     if request.method == 'POST':
         # Get keys, or return None if they don't exist
-        start = request.args.get('start')
-        end = request.args.get('end')
-        midpoints = request.args.get('midpoints')
-        key = request.args.get('key')
+        start = request.form.get('start')
+        end = request.form.get('end')
+        midpoints = request.form.get('midpoints')
+        key = request.form.get('key')
+
+        # Wrangle midpoints into a usable format
+        start = start.replace(' ', ',')
+        end = end.replace(' ', ',')
+        midpoints = [loc.replace(' ', ',') for loc in midpoints.split(',')]
+
+        # Create properties
+        props = {'origins': midpoints.append(start),
+                 'destinations': midpoints.append(end),
+                 'departure_time': 'now',
+                 'key': key}
+
+        base_url = 'https://maps.googleapis.com/maps/api/distancematrix/json'
+
+        # url = UrlBuilder(base_url, properties=props)
+        # url.set_properties(props=props)
 
         return f'''<h1>The start location is: {start}</h1>\n
                 <h2>The end location is: {end}</h2>\n
-                <p>The midpoints are: {midpoints}</p>
-                <p>The key is: {key}</p>'''
+                <h3>The midpoints are: {midpoints}</h3>
+                <p>The key is: {key}</p>
+                <p>{props}</p>'''
 
     # Handle the GET request otherwise
     return '''
         <form method="POST">
-            <p>Enter all values as comma-separated values <3 (ex. "Needham MA, Somerville MA, Seattle WA")</p>
+            <p>Enter all values as comma-separated values <3 (ex. "Needham MA,Somerville MA,Seattle WA")</p>
             <div><label>Start: <input type="text" name="start"></label></div>
             <div><label>End: <input type="text" name="end"></label></div>
             <div><label>Midpoints: <input type="text" name="midpoints"></label></div>

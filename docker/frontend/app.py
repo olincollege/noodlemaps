@@ -1,5 +1,5 @@
 # python3 -m flask run in current folder
-import time, redis#, sys
+import time, redis, requests#, sys
 from flask import Flask, request
 from src.utils.url_builder import UrlBuilder
 
@@ -64,22 +64,27 @@ def form():
         end = end.replace(' ', ',')
         midpoints = [loc.replace(' ', ',') for loc in midpoints.split(',')]
 
-        # Create properties
-        props = {'origins': midpoints.append(start),
-                 'destinations': midpoints.append(end),
-                 'departure_time': 'now',
-                 'key': key}
+        # Format properties of GMaps API request URL
+        base_url = 'https://maps.googleapis.com'
+        subdomains = ['maps', 'api', 'distancematrix', 'json']
+        origins = midpoints + [start]
+        dests = midpoints + [end]
 
-        base_url = 'https://maps.googleapis.com/maps/api/distancematrix/json'
+        # Build GMaps API request URL
+        url = UrlBuilder(base_url)
+        url.append_subdomains(subdomains)
+        url.set_properties(origins=origins, destinations=dests, departure_time='now', key=key)
 
-        # url = UrlBuilder(base_url, properties=props)
-        # url.set_properties(props=props)
+        # Make API request to Google Maps API
+        response = requests.request("GET", url, headers={}, data={})
 
-        return f'''<h1>The start location is: {start}</h1>\n
+        return f'''
+                <h1>{response.json()}</h1>
+                <h1>The start location is: {start}</h1>\n
                 <h2>The end location is: {end}</h2>\n
                 <h3>The midpoints are: {midpoints}</h3>
                 <p>The key is: {key}</p>
-                <p>{props}</p>'''
+                <p>The URL is: {url}</p>'''
 
     # Handle the GET request otherwise
     return '''

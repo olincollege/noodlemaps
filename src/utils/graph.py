@@ -72,7 +72,8 @@ class Graph:
         Runs a greedy TSP algorithm and times the outcome.
 
         Returns:
-            (h, m): (int, int) representing travel time in (hours, minutes)
+            (cycle, h, m): ([str], int, int) representing the sequence of
+            waypoints and the travel time in (hours, minutes)
         """
         cycle = nx.approximation.greedy_tsp(self.graph, source=self._se_node)
         time = 0
@@ -81,4 +82,4 @@ class Graph:
                 continue
             time += self.graph[cycle[i - 1]][n]['weight']
         h, m = divmod(time // 60, 60)
-        return (h, m)
+        return (cycle, h, m)

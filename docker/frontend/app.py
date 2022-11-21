@@ -83,13 +83,12 @@ def form():
         graph = Graph(start, end)
         graph.add_nodes(midpoints)
         graph.add_edges(response, midpoints)
-        (h, m) = graph.get_travel_time()
+        (cycle, h, m) = graph.get_travel_time()
 
         return f'''
                 <h1>Shortest travel time from {start} to {end},
-                passing through {', '.join(midpoints)}, 
+                passing through {', '.join(cycle[1:-2])}, 
                 is {h} hours, {m} minutes.</h1>
-                <h1>Can we then list the nodes in order?</h1>
                 '''
 
     # Handle the GET request otherwise

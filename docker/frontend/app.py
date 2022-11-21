@@ -2,8 +2,9 @@
 import time, redis, requests#, sys
 from flask import Flask, request
 from src.utils.url_builder import UrlBuilder
+from src.utils.graph import Graph
 
-# SRC NEEDS TO BE IN SAME DIRECTORY AS THIS
+# SRC NEEDS TO BE IN SAME DIRECTORY AS THIS (?)
 # sys.path.append('../../src')
 # from src.utils.url_builder import UrlBuilder
 
@@ -51,7 +52,7 @@ def query():
 
 @app.route('/form', methods=['GET', 'POST'])
 def form():
-    # Handle the POST request
+    # Handle the POST request when form is submitted
     if request.method == 'POST':
         # Get keys, or return None if they don't exist
         start = request.form.get('start')
@@ -76,15 +77,20 @@ def form():
         url.set_properties(origins=origins, destinations=dests, departure_time='now', key=key)
 
         # Make API request to Google Maps API
-        response = requests.request("GET", url, headers={}, data={})
+        response = requests.request("GET", url, headers={}, data={}).json()
+
+        # Create Graph and solve TSP
+        graph = Graph(start, end)
+        graph.add_nodes(midpoints)
+        graph.add_edges(response, midpoints)
+        (h, m) = graph.get_travel_time()
 
         return f'''
-                <h1>{response.json()}</h1>
-                <h1>The start location is: {start}</h1>\n
-                <h2>The end location is: {end}</h2>\n
-                <h3>The midpoints are: {midpoints}</h3>
-                <p>The key is: {key}</p>
-                <p>The URL is: {url}</p>'''
+                <h1>Shortest travel time from {start} to {end},
+                passing through {', '.join(midpoints)}, 
+                is {h} hours, {m} minutes.</h1>
+                <h1>Can we then list the nodes in order?</h1>
+                '''
 
     # Handle the GET request otherwise
     return '''

@@ -23,7 +23,7 @@ def test_get_travel_time_single():
     graph.add_edges(response=test_data, midpoints=midpoints)
 
     # Calculate travel time
-    (h, m) = graph.get_travel_time()
+    (cycle, h, m) = graph.get_travel_time()
 
     # This should always work because the response is static
     assert (h == 0) & (m == 53)
@@ -45,7 +45,7 @@ def test_get_travel_time_multiple():
     graph.add_edges(response=test_data, midpoints=midpoints)
 
     # Calculate travel time
-    (h, m) = graph.get_travel_time()
+    (cycle, h, m) = graph.get_travel_time()
 
     # This should always work because the response is static
     assert (h == 2) & (m == 11)

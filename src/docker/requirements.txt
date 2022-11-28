@@ -1,0 +1,6 @@
+#matplotlib
+flask
+redis
+requests
+networkx
+typing  

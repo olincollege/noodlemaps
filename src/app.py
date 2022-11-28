@@ -1,8 +1,8 @@
 # python3 -m flask run in current folder
 import time, redis, requests#, sys
 from flask import Flask, request
-from utils.url_builder import UrlBuilder
-from utils.graph import Graph
+from .utils.url_builder import UrlBuilder
+from .utils.graph import Graph
 
 # SRC NEEDS TO BE IN SAME DIRECTORY AS THIS (?)
 # sys.path.append('../../src')

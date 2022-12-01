@@ -7,6 +7,3 @@ services:
     ports:
       - "8000:3000"
     # why is this 3000? not sure but it works
-  redis:
-    image: "redis:alpine"
-    # not using for what we have now?

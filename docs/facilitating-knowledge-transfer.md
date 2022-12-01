@@ -1,0 +1,4 @@
+* We have weekly meetings outside of class. These meetings typically include progress updates, live PR feedback time, planning and action item delegation, and sometimes work time.
+* When possible, we use pair programming (done especially for core functionalities of building and evaluating graphs) to ensure at least two people start with significant knowledge of the code.
+* We are active on Discord and in class, and will ask questions and clarify information with each other when needed.
+* By reviewing one another's PRs, we gain at least some familiarity with areas of the codebase that we didn't directly work on ourselves.

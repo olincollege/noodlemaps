@@ -1,16 +1,17 @@
 # syntax=docker/dockerfile:1
-FROM python:3.7-alpine
-# may want to swap out this for a different image? causes problems with matplotlib
 
+# may want to swap out this for a different image? causes problems with matplotlib
+FROM python:3.7-alpine
 WORKDIR /code
 ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
+
 # this may be bad for long term security but I don't understand enough about
 # access points to know for sure
+ENV FLASK_RUN_HOST=0.0.0.0
 
-RUN apk add --no-cache gcc musl-dev linux-headers
 # what does this line do? copied from the initial guide followed but not sure
 # exactly what it does. Getting rid of it breaks things though so keep it
+RUN apk add --no-cache gcc musl-dev linux-headers
 
 COPY docker/requirements.txt requirements.txt
 RUN pip install -r requirements.txt

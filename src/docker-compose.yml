@@ -1,14 +1,14 @@
 version: "3.9"
 services:
   web:
-    build: .
     # this builds the current folder so you have to run docker compose at the
     # level containing this yml
+    build: .
     
     ports:
-      - "8000:3000"
       # why is this 3000? not sure but it works
+      - "8000:3000"
     
   redis:
-    image: "redis:alpine"
     # not using for what we have now?
+    image: "redis:alpine"

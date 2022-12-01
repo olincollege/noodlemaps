@@ -1,6 +1,9 @@
 #matplotlib
-flask
-redis
+#the matplotlib install makes spinning up the docker container hang then fail
+#Not entirely sure why (has to do with the image (alpine) according to some
+#quick googling)
+flask #webapp is built on flask
+redis #used for the base code we modified, may be able to strip out later
 requests
 networkx
 typing  

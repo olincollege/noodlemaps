@@ -1,5 +1,5 @@
 # python3 -m flask run in current folder
-import time, redis, requests#, sys
+import time, requests#, sys
 from flask import Flask, request
 from .utils.url_builder import UrlBuilder
 from .utils.graph import Graph
@@ -12,18 +12,6 @@ from .utils.graph import Graph
 #   https://www.digitalocean.com/community/tutorials/processing-incoming-request-data-in-flask
 
 app = Flask(__name__)
-cache = redis.Redis(host='redis', port=6379)
-
-def get_hit_count():
-    retries = 5
-    while True:
-        try:
-            return cache.incr('hits')
-        except redis.exceptions.ConnectionError as exc:
-            if retries == 0:
-                raise exc
-            retries -= 1
-            time.sleep(0.5)
 @app.route('/')
 def index():
     return 'Index Page'

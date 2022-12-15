@@ -1,10 +1,10 @@
 version: "3.9"
 services:
   web:
-    # this builds the current folder so you have to run docker compose at the
-    # level containing this yml
-    build: .
-    
+    # This builds the parent folder, but from this folder (yml still needs to be run here)
+    build:
+        context: ..
+        dockerfile: ./src/Dockerfile
     ports:
       # why is this 3000? not sure but it works
       - "8000:3000"

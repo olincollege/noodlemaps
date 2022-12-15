@@ -5,4 +5,5 @@
 flask #webapp is built on flask
 requests
 networkx
-typing  
+typing
+pytest

@@ -21,11 +21,10 @@ jobs:
         run: docker compose up -d --build
         working-directory: ./src
 
-      - name: Remove __init__ in container
-        run: docker exec src-web-1 rm __init__.py
-
       - name: Run end-to-end tests in container
-        run: docker exec -w /code/testing/end_to_end_tests src-web-1 pytest
+        env:
+          APIKEY: ${{ secrets.GMAP_API_KEY }}
+        run: docker exec -w /code/testing/end_to_end_tests src-web-1 pytest --apikey "$APIKEY"
 
       - name: Set identity to Berwin
         run: git config --global user.email "blan@olin.edu" && git config --global user.name "Berwin Lan"

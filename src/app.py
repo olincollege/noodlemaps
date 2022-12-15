@@ -57,13 +57,8 @@ def form():
         # Get keys, or return None if they don't exist
         start = request.form.get('start')
         end = request.form.get('end')
-        midpoints = request.form.get('midpoints')
+        midpoints = request.form.get('midpoints').split(',')
         key = request.form.get('key')
-
-        # Wrangle midpoints into a usable format
-        start = start.replace(' ', ',')
-        end = end.replace(' ', ',')
-        midpoints = [loc.replace(' ', ',') for loc in midpoints.split(',')]
 
         # Format properties of GMaps API request URL
         base_url = 'https://maps.googleapis.com'
@@ -77,7 +72,7 @@ def form():
         url.set_properties(origins=origins, destinations=dests, departure_time='now', key=key)
 
         # Make API request to Google Maps API
-        response = requests.request("GET", url, headers={}, data={}).json()
+        response = requests.request("GET", str(url), headers={}, data={}).json()
 
         # Create Graph and solve TSP
         graph = Graph(start, end)

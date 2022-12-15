@@ -3,4 +3,5 @@ flask
 redis
 requests
 networkx
-typing  
+typing
+pytest
